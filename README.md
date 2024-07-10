@@ -1,8 +1,25 @@
-# React + Vite
+# JSinema
+JSinema is a simple movie/series search web app built with [ReactJS@18](https://18.react.dev/) and [OMDb API](https://www.omdbapi.com/)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+## How to get started:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Install Dependencies
+```bash
+npm install
+```
+
+### Run Vite Frontend
+```bash
+npm run dev
+```
+
+### Build assets for Production
+```bash
+npm run build
+```
+
+### Preview Production Build
+```bash
+npm run preview
+```
