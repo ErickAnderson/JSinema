@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-.movie-list ul{
-    height: calc(100vh - 6rem);
-    max-height: 768px;
+@media (min-width: 768px) {
+    .movie-list ul{
+        height: calc(100vh - 6rem);
+        max-height: 768px;
+    }
 }

@@ -4,7 +4,7 @@ import MovieListItem from "./MovieListItem.jsx";
 function MovieList({numResults, movies, fecthSelectedMovie, loading}) {
     return (
         <aside className="movie-list border border-gray-600">
-            <p className="p-2 sm:p-4 text-xs">{numResults} RESULTS</p>
+            <p className="p-2 md:p-4 text-xs">{numResults} RESULTS</p>
 
             {/*  Movie items  */}
             {loading ? (

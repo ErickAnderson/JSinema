@@ -74,22 +74,19 @@ function App() {
     }, [query, throttledFetchMovies]);
 
     return (
-        <>
-            {/* Wrapper */}
-            <div className="grow w-full flex flex-col gap-4 dark:text-white">
-                <NavBar/>
-                {/*  Search form  */}
-                <Header query={query} setQuery={setQuery}/>
-                {/*  Movies section divided in 2 columns 33/66% */}
-                <main id="movies-wrapper" className="grow sm:grid sm:grid-cols-3 gap-4">
-                    {/* Movie list */}
-                    <MovieList numResults={numResults} movies={movies} fecthSelectedMovie={fecthSelectedMovie} loading={listloading}/>
-                    {/*  Movie card  */}
-                    <MovieCard movie={selectedMovie} loading={movieloading}/>
-                </main>
-            </div>
+        <div className="flex flex-col gap-4 dark:text-white max-w-7xl mx-auto px-2 md:px-4">
+            <NavBar/>
+            {/*  Search form  */}
+            <Header query={query} setQuery={setQuery}/>
+            {/*  Movies section divided in 2 columns 33/66% */}
+            <main id="movies-wrapper" className="grow md:grid md:grid-cols-3 gap-4">
+                {/* Movie list */}
+                <MovieList numResults={numResults} movies={movies} fecthSelectedMovie={fecthSelectedMovie} loading={listloading}/>
+                {/*  Movie card  */}
+                <MovieCard movie={selectedMovie} loading={movieloading}/>
+            </main>
             <Footer/>
-        </>
+        </div>
     );
 }
 
