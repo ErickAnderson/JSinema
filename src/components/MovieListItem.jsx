@@ -1,4 +1,4 @@
-import noImage from "../assets/no-image.png";
+import noImage from "../assets/images/no-image.png";
 
 function MovieListItem({movies, fecthSelectedMovie}) {
     return (

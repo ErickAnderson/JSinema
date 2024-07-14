@@ -10,7 +10,7 @@ import Footer from "./components/Footer.jsx";
 const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 const BASE_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;
 
-// @TODO Maybe look into useMemo for caching
+// Simple cache for selected movies
 let movieCache = {};
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
     const [movies, setMovies] = useState([]);
     const [selectedMovie, setSelectedMovie] = useState([]);
     const [numResults, setNumResults] = useState(0);
+
     const [movieloading, setMovieloading] = useState(false);
     const [listloading, setListloading] = useState(false);
 
@@ -105,8 +106,7 @@ function App() {
                 onYearRangeChange={(range) => setSearchYearRange(range)}
             />
 
-            <main id="movies-wrapper" className="grow md:grid md:grid-cols-3 gap-4">
-                {/* Movie list */}
+            <main className="grow md:grid md:grid-cols-3 gap-4">
                 <MovieList
                     numResults={numResults}
                     movies={movies}
@@ -114,8 +114,10 @@ function App() {
                     loading={listloading}
                 />
 
-                {/*  Movie card  */}
-                <MovieCard selectedMovie={selectedMovie} loading={movieloading}/>
+                <MovieCard
+                    selectedMovie={selectedMovie}
+                    loading={movieloading}
+                />
             </main>
 
             <Footer/>

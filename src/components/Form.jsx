@@ -1,7 +1,4 @@
 // @TODO prop validation
-// @TODO add year range input component
-// @TODO add type of movie radios component
-// @TODO add search input component
 
 import SearchType from "./search/SearchType.jsx";
 import SearchYearRange from "./search/SearchYearRange.jsx";
