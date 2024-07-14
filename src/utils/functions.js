@@ -1,4 +1,5 @@
-export function throttle(func, delay = 1000) {
+// Delay the execution of a function by a specified amount of time
+export function throttle(func, delay = 300) {
     if (typeof func !== 'function') {
         console.error('The first argument of throttle() must be a function');
         return;
@@ -7,11 +8,9 @@ export function throttle(func, delay = 1000) {
     let timeoutFlag;
 
     return function (...args) {
-        if (!timeoutFlag) {
+        clearTimeout(timeoutFlag);
+        timeoutFlag = setTimeout(function () {
             func(...args);
-            timeoutFlag = setTimeout(function () {
-                timeoutFlag = false;
-            }, delay);
-        }
-    }
+        }, delay);
+    };
 }

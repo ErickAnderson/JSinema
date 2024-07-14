@@ -18,18 +18,28 @@ function App() {
     const [movies, setMovies] = useState([]);
     const [selectedMovie, setSelectedMovie] = useState([]);
     const [numResults, setNumResults] = useState(0);
+    const [movieloading, setMovieloading] = useState(false);
+    const [listloading, setListloading] = useState(false);
 
     const fetchMovies = async function (searchQuery) {
         if (!searchQuery) return;
 
-        const response = await fetch(`${BASE_URL}&s=${searchQuery}`);
-        const data = await response.json();
-        if (data.Search) {
-            setMovies(data.Search);
-            setNumResults(data.totalResults);
-            if (data.Search.length > 0) {
-                await fecthSelectedMovie(data.Search[0].imdbID);
+        setListloading(true);
+
+        try {
+            const response = await fetch(`${BASE_URL}&s=${searchQuery}`);
+            const data = await response.json();
+            if (data.Search) {
+                setMovies(data.Search);
+                setNumResults(data.totalResults);
+                if (data.Search.length > 0) {
+                    await fecthSelectedMovie(data.Search[0].imdbID);
+                }
             }
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setListloading(false);
         }
     };
     const throttledFetchMovies = useCallback(throttle(fetchMovies, 300), []);
@@ -45,10 +55,18 @@ function App() {
             return;
         }
 
-        const response = await fetch(`${BASE_URL}&i=${imdbID}`);
-        const data = await response.json();
-        setSelectedMovie(data);
-        movieCache[imdbID] = data;
+        setMovieloading(true);
+
+        try {
+            const response = await fetch(`${BASE_URL}&i=${imdbID}`);
+            const data = await response.json();
+            setSelectedMovie(data);
+            movieCache[imdbID] = data;
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setMovieloading(false);
+        }
     };
 
     useEffect(() => {
@@ -65,9 +83,9 @@ function App() {
                 {/*  Movies section divided in 2 columns 33/66% */}
                 <main id="movies-wrapper" className="grow sm:grid sm:grid-cols-3 gap-4">
                     {/* Movie list */}
-                    <MovieList numResults={numResults} movies={movies} fecthSelectedMovie={fecthSelectedMovie}/>
+                    <MovieList numResults={numResults} movies={movies} fecthSelectedMovie={fecthSelectedMovie} loading={listloading}/>
                     {/*  Movie card  */}
-                    <MovieCard movie={selectedMovie}/>
+                    <MovieCard movie={selectedMovie} loading={movieloading}/>
                 </main>
             </div>
             <Footer/>

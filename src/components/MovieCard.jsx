@@ -1,6 +1,7 @@
 import MovieDetails from "./MovieDetails.jsx";
+import Spinner from "./Spinner.jsx";
 
-function MovieCard({movie}) {
+function MovieCard({movie, loading}) {
     if (movie.length === 0) {
         return (
             <div className="border sm:col-span-2 flex flex-col border-gray-500 p-4 gap-4 max-w-full">
@@ -11,7 +12,11 @@ function MovieCard({movie}) {
     } else {
         return (
             <div className="border sm:col-span-2 flex flex-col border-gray-500 p-4 gap-4 max-w-full">
-                <MovieDetails movie={movie}/>
+                { loading ? (
+                    <Spinner loading={loading}/>
+                ) : (
+                    <MovieDetails movie={movie}/>
+                )}
             </div>
         );
     }
