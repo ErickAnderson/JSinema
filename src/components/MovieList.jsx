@@ -1,5 +1,6 @@
-import Spinner from "./Spinner.jsx";
+import Spinner from "./common/Spinner.jsx";
 import MovieListItem from "./MovieListItem.jsx";
+import "../assets/styles/custom.css";
 
 function MovieList({numResults, movies, fecthSelectedMovie, loading}) {
     return (

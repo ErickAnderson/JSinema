@@ -5,16 +5,16 @@ import MovieRating from "./MovieRating.jsx";
 function MovieDetails({selectedMovie}) {
     return (
         <>
-            <section className="w-full flex gap-2 md:gap-4 relative">
+            <section className="w-full flex flex-wrap md:flex-nowrap gap-2 md:gap-4 relative">
                 <img src={selectedMovie.Poster == 'N/A' ? noImage : selectedMovie.Poster} alt="Movie poster" className="w-full max-w-32 md:max-w-56 h-auto object-contain object-bottom "/>
 
                 {/* Watchlist button */}
                 <WatchlistButton selectedMovie={selectedMovie}/>
 
                 {/*  Movie details  */}
-                <div className="movie-details self-end pt-12 w-full">
+                <div className="movie-details self-end md:pt-12 w-full">
                     <div className="movie-info flex flex-wrap gap-2 ">
-                        <h2 className="text-3xl font-bold basis-full mb-2">{selectedMovie.Title}</h2>
+                        <h2 className="text-xl md:text-3xl font-bold basis-full mb-2">{selectedMovie.Title}</h2>
 
                         <span className="movie-info-rating text-center border rounded-lg px-2">{selectedMovie.Rated}</span>
                         <span className="movie-info-year">{selectedMovie.Year}</span>
