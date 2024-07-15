@@ -1,12 +1,15 @@
 import {createContext, useCallback, useContext, useEffect, useState} from 'react';
-import {throttle} from "../utils/functions.js";
 import {useSearch} from "./SearchContext.jsx";
+import {throttle} from "../utils/functions.js";
 
 const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 const BASE_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;
 
 // Simple cache for selected movies
 let movieCache = {};
+let lastSearchQuery = '';
+let lastSearchType = '';
+let lastSearchYearRange = [];
 
 const MoviesContext = createContext(null);
 
@@ -25,16 +28,34 @@ export function MoviesProvider({children}) {
     const [listLoading, setListLoading] = useState(false);
     const [movieLoading, setMovieLoading] = useState(false);
 
-    // Fetch movies from the API
-    const fetchMovies = async function (searchQuery, selectedSearchType, searchYearRange) {
-        // Remove empty spaces and special characters then convert to lowercase
-        searchQuery = searchQuery.replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
-        if (!searchQuery) return;
+    // Fetch movies from the API
+    const fetchMovies = async function (searchQuery, selectedSearchType, searchYearRange, page = 1) {
+        // Remove trailing spaces and special characters then encode it
+        let filteredQuery = searchQuery.trim().replace(/[^a-zA-Z0-9: ]/g, '').toLowerCase();
+        filteredQuery = encodeURIComponent(filteredQuery);
+
+        if (!filteredQuery) return;
 
         setListLoading(true);
 
-        let url = `${BASE_URL}&s=${searchQuery}`;
+        let isNewSearch = false;
+
+        // Reset the movies list if the search params have changed
+        if (lastSearchQuery !== searchQuery || lastSearchType !== selectedSearchType || lastSearchYearRange !== searchYearRange) {
+            isNewSearch = true;
+
+            page = 1;
+            setCurrentPage(1);
+            setMovies([]);
+            lastSearchQuery = searchQuery;
+            lastSearchType = selectedSearchType;
+            lastSearchYearRange = searchYearRange;
+        }
+
+        let url = `${BASE_URL}&s=${filteredQuery}&page=${page}`;
         if (selectedSearchType) {
             url += `&type=${selectedSearchType}`;
         }
@@ -53,9 +74,14 @@ export function MoviesProvider({children}) {
                     });
                 }
 
-                setMovies(data.Search);
+                setMovies((prevMovies) => [...prevMovies, ...data.Search]);
+                // KNOW BUG:
+                // If using the year range filter, the total results will be off as we don't know if the user scrolled through all the results
                 setNumResults(data.totalResults);
-                if (data.Search.length > 0) {
+
+                setTotalPages(Math.ceil(data.totalResults / 10));
+
+                if (data.Search.length > 0 && isNewSearch) {
                     // Pre-select the first movie in the list
                     await fetchSelectedMovie(data.Search[0].imdbID);
                 }
@@ -64,20 +90,40 @@ export function MoviesProvider({children}) {
                 setMovies([]);
                 setNumResults(0);
                 setSelectedMovie([]);
-                setResponseMessage('No results found. Try another search term.')
+                setResponseMessage('No results found.')
             }
         } catch (error) {
             console.error(error);
         } finally {
             setListLoading(false);
+            setCurrentPage((prev) => prev + 1)
         }
     };
-    const throttledFetchMovies = useCallback(throttle(fetchMovies, 200), []);
+
+    const throttledFetchMovies = useCallback(throttle(fetchMovies, 200), [currentPage, listLoading]);
 
     // Listen for changes in query and selectedSearchType
     useEffect(() => {
-        throttledFetchMovies(searchQuery, selectedSearchType, searchYearRange);
-    }, [searchQuery, selectedSearchType, searchYearRange, throttledFetchMovies]);
+        throttledFetchMovies(searchQuery, selectedSearchType, searchYearRange, currentPage);
+    }, [searchQuery, selectedSearchType, searchYearRange]);
+
+    // Implement infinite scrolling
+    const handleScroll = function () {
+        if (listLoading || currentPage > totalPages) return;
+
+        const $movieList = document.querySelector('.movie-list');
+        if ($movieList.clientHeight + $movieList.scrollTop >= $movieList.scrollHeight - 15) {
+            throttledFetchMovies(searchQuery, selectedSearchType, searchYearRange, currentPage);
+        }
+    }
+
+    // Bind the handle scroll to a useEffect
+    useEffect(() => {
+        document.querySelector('.movie-list').addEventListener('scroll', handleScroll);
+        return () => {
+            document.querySelector('.movie-list').removeEventListener('scroll', handleScroll);
+        }
+    }, [throttledFetchMovies]);
 
     // Fetch selected movie from the API
     const fetchSelectedMovie = async function (imdbID) {
@@ -100,9 +146,8 @@ export function MoviesProvider({children}) {
             movieCache[imdbID] = data;
         } catch (error) {
             console.error(error);
-        } finally {
-            setMovieLoading(false);
         }
+        setMovieLoading(false);
     };
 
     return (

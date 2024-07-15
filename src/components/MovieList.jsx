@@ -10,15 +10,12 @@ function MovieList() {
             <p className="p-2 md:p-4 border border-gray-600 text-xs">{numResults} RESULTS</p>
 
             {/*  Movie items  */}
-            {listLoading ? (
-                <Spinner loading={listLoading}/>
-            ) : (
-                <ul>
-                    {movies.map((movie) => (
-                        <MovieListItem key={movie.imdbID} movie={movie}/>
-                    ))}
-                </ul>
-            )}
+            <ul>
+                {movies.map((movie) => (
+                    <MovieListItem key={movie.imdbID} movie={movie}/>
+                ))}
+            </ul>
+            {listLoading && <Spinner loading={listLoading}/>}
         </aside>
     );
 }
