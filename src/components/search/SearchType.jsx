@@ -5,7 +5,7 @@ function SearchType() {
 
     return (
         <div>
-            <p className="mb-2 font-bold">TYPE</p>
+            <p className="md:mb-2 font-bold">TYPE</p>
 
             <div className="flex gap-x-4 py-2">
                 {types.map((type) => {

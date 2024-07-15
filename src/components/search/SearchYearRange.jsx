@@ -14,7 +14,7 @@ function SearchYearRange({minYear = 1900}) {
 
     return (
         <div>
-            <p className="mb-2 font-bold">YEAR</p>
+            <p className="md:mb-2 font-bold">YEAR</p>
 
             <div className="flex items-center">
                 <span className="w-12">{searchYearRange[0]}</span>

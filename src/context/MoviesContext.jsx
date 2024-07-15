@@ -27,6 +27,9 @@ export function MoviesProvider({children}) {
 
     // Fetch movies from the API
     const fetchMovies = async function (searchQuery, selectedSearchType, searchYearRange) {
+        // Remove empty spaces and special characters then convert to lowercase
+        searchQuery = searchQuery.replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase();
+
         if (!searchQuery) return;
 
         setListLoading(true);
@@ -43,6 +46,7 @@ export function MoviesProvider({children}) {
                 // If year range is set, filter movies by year
                 if (searchYearRange.length > 0) {
                     const [minYear, maxYear] = searchYearRange;
+                    // Since the API only allows filtering by one year value not range, we need to filter the results manually
                     data.Search = data.Search.filter((movie) => {
                         const year = parseInt(movie.Year);
                         return year >= minYear && year <= maxYear;
@@ -52,6 +56,7 @@ export function MoviesProvider({children}) {
                 setMovies(data.Search);
                 setNumResults(data.totalResults);
                 if (data.Search.length > 0) {
+                    // Pre-select the first movie in the list
                     await fetchSelectedMovie(data.Search[0].imdbID);
                 }
             } else {
@@ -67,7 +72,7 @@ export function MoviesProvider({children}) {
             setListLoading(false);
         }
     };
-    const throttledFetchMovies = useCallback(throttle(fetchMovies, 300), []);
+    const throttledFetchMovies = useCallback(throttle(fetchMovies, 200), []);
 
     // Listen for changes in query and selectedSearchType
     useEffect(() => {
@@ -80,7 +85,7 @@ export function MoviesProvider({children}) {
             return;
         }
 
-        // Cache selected movie
+        // Cached selected movie
         if (movieCache[imdbID]) {
             setSelectedMovie(movieCache[imdbID]);
             return;
