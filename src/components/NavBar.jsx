@@ -1,10 +1,7 @@
 function NavBar() {
     return (
-        <nav className="flex items-center justify-between mt-2 md:mt-4">
-            {/* @TODO remove anchor link if not using page routers */}
-            <a href="#" aria-label="Home">
-                <h1 className="md:text-2xl font-bold text-zinc-950 dark:text-white"><span className="text-yellow-400">JS</span>inema</h1>
-            </a>
+        <nav className="flex items-center justify-between">
+            <h1 className="md:text-2xl font-bold text-zinc-950 dark:text-white"><span className="text-yellow-400">JS</span>inema</h1>
 
             {/*View watchlist button*/}
             <a

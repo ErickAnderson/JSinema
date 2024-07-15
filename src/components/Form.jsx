@@ -10,7 +10,7 @@ function Form({query, setQuery, selectedSearchType, setSelectedSearchType, onYea
     };
 
     return (
-        <form id="search-form" className="flex gap-6 items-center flex-wrap">
+        <form id="search-form" className="flex gap-4 md:gap-6 items-center flex-wrap text-sm md:text-base">
             <SearchTitle query={query} setQuery={setQuery}/>
 
             <SearchYearRange onRangeChange={handleRangeChange}/>

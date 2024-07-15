@@ -5,12 +5,13 @@ function SearchType({selectedSearchType, setSelectedSearchType}) {
 
     return (
         <div>
-            <p className="mb-2">TYPE</p>
+            <p className="mb-2 font-bold">TYPE</p>
 
-            <div className="flex gap-x-4  py-2">
+            <div className="flex gap-x-4 py-2">
                 {types.map((type) => {
                         return (
                             <SearchTypeRadio
+                                key={type[0]}
                                 radioLabel={type[0]}
                                 radioValue={type[1]}
                                 selectedSearchType={selectedSearchType}

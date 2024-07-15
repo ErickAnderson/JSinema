@@ -15,7 +15,7 @@ function SearchYearRange({minYear = 1900, onRangeChange}) {
 
     return (
         <div>
-            <p className="mb-2">YEAR</p>
+            <p className="mb-2 font-bold">YEAR</p>
             <div className="flex items-center">
                 <span className="w-12">{yearRange[0]}</span>
                 <ReactSlider

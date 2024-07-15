@@ -95,33 +95,39 @@ function App() {
     };
 
     return (
-        <div className="container flex flex-col gap-4 dark:text-white max-w-7xl mx-auto px-2 md:px-4">
-            <NavBar/>
+        <>
+            <header className="bg-slate-950">
+                <div className="container max-w-7xl mx-auto flex flex-col gap-4 dark:text-white p-2 md:p-4">
+                    <NavBar/>
 
-            <Form
-                query={query}
-                setQuery={setQuery}
-                selectedSearchType={selectedSearchType}
-                setSelectedSearchType={setSelectedSearchType}
-                onYearRangeChange={(range) => setSearchYearRange(range)}
-            />
+                    <Form
+                        query={query}
+                        setQuery={setQuery}
+                        selectedSearchType={selectedSearchType}
+                        setSelectedSearchType={setSelectedSearchType}
+                        onYearRangeChange={(range) => setSearchYearRange(range)}
+                    />
+                </div>
+            </header>
 
-            <main className="grow md:grid md:grid-cols-3 gap-4">
-                <MovieList
-                    numResults={numResults}
-                    movies={movies}
-                    fecthSelectedMovie={fecthSelectedMovie}
-                    loading={listloading}
-                />
+            <div className="container max-w-7xl mx-auto flex flex-col gap-4 dark:text-white pt-2 px-2 md:px-4">
+                <main className="grow md:grid md:grid-cols-3 gap-4">
+                    <MovieList
+                        numResults={numResults}
+                        movies={movies}
+                        fecthSelectedMovie={fecthSelectedMovie}
+                        loading={listloading}
+                    />
 
-                <MovieCard
-                    selectedMovie={selectedMovie}
-                    loading={movieloading}
-                />
-            </main>
+                    <MovieCard
+                        selectedMovie={selectedMovie}
+                        loading={movieloading}
+                    />
+                </main>
 
-            <Footer/>
-        </div>
+                <Footer/>
+            </div>
+        </>
     );
 }
 
