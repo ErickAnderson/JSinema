@@ -31,6 +31,8 @@ export function MoviesProvider({children}) {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
+    const [watchlist, setWatchlist] = useState([]);
+
     // Fetch movies from the API
     const fetchMovies = async function (searchQuery, selectedSearchType, searchYearRange, page = 1) {
         // Remove trailing spaces and special characters then encode it
@@ -150,6 +152,24 @@ export function MoviesProvider({children}) {
         setMovieLoading(false);
     };
 
+    // Handle Watchlist changes
+    useEffect(() => {
+        const watchlist = JSON.parse(localStorage.getItem('jsinema_watchlist')) || [];
+        setWatchlist(watchlist);
+    }, []);
+
+    // Override the movies list with the watchlist
+    const loadMoviesFromWatchlist = async function () {
+        setMovies(watchlist);
+        setNumResults(watchlist.length);
+        if (watchlist.length > 0) {
+            await fetchSelectedMovie(watchlist[0].imdbID);
+        } else {
+            setSelectedMovie([]);
+            setResponseMessage('Your watchlist is empty.');
+        }
+    }
+
     return (
         <MoviesContext.Provider value={{
             movies,
@@ -158,7 +178,10 @@ export function MoviesProvider({children}) {
             listLoading,
             movieLoading,
             responseMessage,
-            fetchSelectedMovie
+            fetchSelectedMovie,
+            watchlist,
+            setWatchlist,
+            loadMoviesFromWatchlist
         }}>
             {children}
         </MoviesContext.Provider>

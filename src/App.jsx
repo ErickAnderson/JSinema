@@ -11,25 +11,25 @@ function App() {
     return (
         <>
             <SearchProvider>
-                <header className="bg-slate-950">
-                    <div className="container max-w-7xl mx-auto flex flex-col gap-4 p-2 md:p-4">
-                        <NavBar/>
+                <MoviesProvider>
+                    <header className="bg-slate-950">
+                        <div className="container max-w-7xl mx-auto flex flex-col gap-4 p-2 md:p-4">
+                            <NavBar/>
 
-                        <Form/>
-                    </div>
-                </header>
+                            <Form/>
+                        </div>
+                    </header>
 
-                <div className="container max-w-7xl mx-auto flex flex-col gap-4 pt-2 px-2 md:px-4">
-                    <main className="grow md:grid md:grid-cols-3 gap-4">
-                        <MoviesProvider>
+                    <div className="container max-w-7xl mx-auto flex flex-col gap-4 pt-2 px-2 md:px-4">
+                        <main className="grow md:grid md:grid-cols-3 gap-4">
                             <MovieList/>
 
                             <MovieCard/>
-                        </MoviesProvider>
-                    </main>
+                        </main>
 
-                    <Footer/>
-                </div>
+                        <Footer/>
+                    </div>
+                </MoviesProvider>
             </SearchProvider>
         </>
     );
