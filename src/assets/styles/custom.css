@@ -26,3 +26,8 @@
 ::-webkit-scrollbar-thumb:hover {
     @apply cursor-pointer outline-4;
 }
+
+/* Override the outline color */
+*:focus {
+    @apply outline-yellow-400;
+}

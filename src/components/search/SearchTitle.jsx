@@ -9,7 +9,8 @@ function SearchTitle() {
             <input
                 type="text"
                 id="search"
-                placeholder="Search for a movie, series,  episode..."
+                name="search"
+                placeholder="Search for a movie, series, episode..."
                 className="py-2 pl-10 w-full text-lg md:text-3xl bg-slate-700 focus:outline-none focus:ring focus:ring-yellow-400"
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}

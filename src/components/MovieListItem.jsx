@@ -11,6 +11,10 @@ function MovieListItem({movie}) {
                 ${selectedMovie.imdbID === movie.imdbID && 'bg-yellow-400/25 border-yellow-400'}`
             }
             onClick={() => fetchSelectedMovie(movie.imdbID)}
+            onKeyUp={(e) => (e.key === 'Enter' ) && fetchSelectedMovie(movie.imdbID)}
+            aria-label={`Select ${movie.Title}`}
+            role="button"
+            tabIndex="0"
         >
             <img src={movie.Poster === 'N/A' ? noImage : movie.Poster} alt={movie.Title} className="max-w-20 object-contain"/>
 
