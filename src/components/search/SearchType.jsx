@@ -1,6 +1,6 @@
 import SearchTypeRadio from "./SearchTypeRadio.jsx";
 
-function SearchType({selectedSearchType, setSelectedSearchType}) {
+function SearchType() {
     const types = [["Any", ""], ["Movie", "movie"], ["Series", "series"], ["Episode", "episode"]];
 
     return (
@@ -14,8 +14,6 @@ function SearchType({selectedSearchType, setSelectedSearchType}) {
                                 key={type[0]}
                                 radioLabel={type[0]}
                                 radioValue={type[1]}
-                                selectedSearchType={selectedSearchType}
-                                setSelectedSearchType={setSelectedSearchType}
                             />
                         );
                     }

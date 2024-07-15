@@ -1,5 +1,6 @@
 import {createContext, useCallback, useContext, useEffect, useState} from 'react';
 import {throttle} from "../utils/functions.js";
+import {useSearch} from "./SearchContext.jsx";
 
 const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 const BASE_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;
@@ -13,10 +14,13 @@ export function useMovies() {
     return useContext(MoviesContext);
 }
 
-export function MoviesProvider({children, query, selectedSearchType, searchYearRange}) {
+export function MoviesProvider({children}) {
+    const {searchQuery, selectedSearchType, searchYearRange} = useSearch();
+
     const [movies, setMovies] = useState([]);
     const [selectedMovie, setSelectedMovie] = useState([]);
     const [numResults, setNumResults] = useState(0);
+    const [responseMessage, setResponseMessage] = useState('Use the search above to find a movie.');
 
     const [listLoading, setListLoading] = useState(false);
     const [movieLoading, setMovieLoading] = useState(false);
@@ -54,6 +58,8 @@ export function MoviesProvider({children, query, selectedSearchType, searchYearR
                 // No results found
                 setMovies([]);
                 setNumResults(0);
+                setSelectedMovie([]);
+                setResponseMessage('No results found. Try another search term.')
             }
         } catch (error) {
             console.error(error);
@@ -65,8 +71,8 @@ export function MoviesProvider({children, query, selectedSearchType, searchYearR
 
     // Listen for changes in query and selectedSearchType
     useEffect(() => {
-        throttledFetchMovies(query, selectedSearchType, searchYearRange);
-    }, [query, selectedSearchType, searchYearRange, throttledFetchMovies]);
+        throttledFetchMovies(searchQuery, selectedSearchType, searchYearRange);
+    }, [searchQuery, selectedSearchType, searchYearRange, throttledFetchMovies]);
 
     // Fetch selected movie from the API
     const fetchSelectedMovie = async function (imdbID) {
@@ -101,6 +107,7 @@ export function MoviesProvider({children, query, selectedSearchType, searchYearR
             numResults,
             listLoading,
             movieLoading,
+            responseMessage,
             fetchSelectedMovie
         }}>
             {children}

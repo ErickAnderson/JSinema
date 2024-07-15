@@ -1,9 +1,9 @@
 import "../../assets/styles/radio.css";
 
-function SearchTypeRadio({radioLabel, radioValue, selectedSearchType, setSelectedSearchType}) {
-    const handleTypeChange = function (event) {
-        setSelectedSearchType(event.target.value);
-    };
+import {useSearch} from "../../context/SearchContext.jsx";
+
+function SearchTypeRadio({radioLabel, radioValue}) {
+    const {selectedSearchType, setSelectedSearchType} = useSearch();
 
     return (
         <label className="cursor-pointer flex items-center">
@@ -13,7 +13,7 @@ function SearchTypeRadio({radioLabel, radioValue, selectedSearchType, setSelecte
                 value={radioValue}
                 className="radio"
                 checked={selectedSearchType === radioValue}
-                onChange={handleTypeChange}
+                onChange={(event) => setSelectedSearchType(event.target.value)}
             />
             {radioLabel}
         </label>

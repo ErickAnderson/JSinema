@@ -1,7 +1,9 @@
 import {FaBookmark} from "react-icons/fa";
 import {useEffect, useState} from "react";
+import {useMovies} from "../context/MoviesContext.jsx";
 
-function WatchlistButton({selectedMovie}) {
+function WatchlistButton() {
+    const {selectedMovie} = useMovies();
     const [onWatchlist, setOnWatchlist] = useState(false);
 
     // Check if the movie is already in the watchlist

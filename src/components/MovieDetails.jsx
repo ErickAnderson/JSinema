@@ -1,15 +1,19 @@
-import noImage from "../assets/images/no-image.png";
 import WatchlistButton from "./WatchlistButton.jsx";
 import MovieRating from "./MovieRating.jsx";
+import {useMovies} from "../context/MoviesContext.jsx";
 
-function MovieDetails({selectedMovie}) {
+import noImage from "../assets/images/no-image.png";
+
+function MovieDetails() {
+    const {selectedMovie} = useMovies();
+
     return (
         <>
             <section className="w-full flex flex-wrap md:flex-nowrap gap-2 md:gap-4 relative">
                 <img src={selectedMovie.Poster == 'N/A' ? noImage : selectedMovie.Poster} alt="Movie poster" className="w-full max-w-32 md:max-w-56 h-auto object-contain object-bottom "/>
 
                 {/* Watchlist button */}
-                <WatchlistButton selectedMovie={selectedMovie}/>
+                <WatchlistButton/>
 
                 {/*  Movie details  */}
                 <div className="movie-details self-end md:pt-12 w-full">
