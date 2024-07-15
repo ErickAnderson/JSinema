@@ -13,14 +13,14 @@ function App() {
             <SearchProvider>
                 <MoviesProvider>
                     <header className="bg-slate-950">
-                        <div className="container max-w-7xl mx-auto flex flex-col gap-4 p-2 md:p-4">
+                        <div className="container max-w-7xl mx-auto flex flex-col gap-4 p-2">
                             <NavBar/>
 
                             <Form/>
                         </div>
                     </header>
 
-                    <div className="container max-w-7xl mx-auto flex flex-col gap-4 pt-2 px-2 md:px-4">
+                    <div className="container max-w-7xl mx-auto flex flex-col gap-4 pt-2 px-2">
                         <main className="grow md:grid md:grid-cols-3 gap-4">
                             <MovieList/>
 
