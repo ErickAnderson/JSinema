@@ -20,7 +20,7 @@ function SearchYearRange({minYear = 1900, onRangeChange}) {
                 <span className="w-12">{yearRange[0]}</span>
                 <ReactSlider
                     className="w-44 flex place-items-center h-8 p-2"
-                    thumbClassName="h-4 w-4 bg-yellow-400 rounded-full cursor-pointer outline-none focus:outline-none hover:bg-yellow-500 hover:shadow-md"
+                    thumbClassName="h-4 w-4 bg-yellow-400 rounded-full cursor-pointer focus:outline hover:outline outline-white hover:bg-yellow-500 hover:shadow-md"
                     trackClassName="year-range-track"
                     defaultValue={[minYear, maxYear]}
                     min={minYear}

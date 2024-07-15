@@ -1,0 +1,22 @@
+.radio{
+    @apply mr-2 cursor-pointer checked:bg-yellow-400 appearance-none border-2 border-gray-400 rounded-full h-5 w-5;
+}
+.radio:checked{
+    @apply bg-yellow-400 border-yellow-400 shadow-slate-900;
+    animation: radio-selected 0.2s ease-out forwards;
+}
+
+@keyframes radio-selected {
+    0% {
+        box-shadow: 0 0 0 10px black inset;
+    }
+    30% {
+        box-shadow: 0 0 0 5px black inset;
+    }
+    60% {
+        box-shadow: 0 0 0 0 black inset;
+    }
+    100% {
+        box-shadow: 0 0 0 2px black inset;
+    }
+}

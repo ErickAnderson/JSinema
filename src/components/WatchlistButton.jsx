@@ -10,7 +10,7 @@ function WatchlistButton({selectedMovie}) {
         setOnWatchlist(watchlist.some((item) => item.imdbID === selectedMovie.imdbID));
     }, [selectedMovie]);
 
-    // Add the json list of movies to local storage
+    // Add/Remove the json list of movies to local storage
     function handleWatchlist(movie) {
         let watchlist = JSON.parse(localStorage.getItem('jsinema_watchlist')) || [];
 

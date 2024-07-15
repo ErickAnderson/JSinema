@@ -1,6 +1,23 @@
 @media (min-width: 768px) {
-    .movie-list ul{
+    .movie-list ul {
         height: calc(100vh - 6rem);
         max-height: 768px;
     }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+    @apply bg-gray-500;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-yellow-400;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    @apply cursor-pointer outline-4;
 }
