@@ -43,12 +43,8 @@ export function MoviesProvider({children}) {
 
         setListLoading(true);
 
-        let isNewSearch = false;
-
         // Reset the movies list if the search params have changed
-        if (lastSearchQuery !== searchQuery || lastSearchType !== selectedSearchType || lastSearchYearRange !== searchYearRange) {
-            isNewSearch = true;
-
+        if (lastSearchQuery !== searchQuery || lastSearchType !== selectedSearchType || lastSearchYearRange.toString() !== searchYearRange.toString()) {
             page = 1;
             setCurrentPage(1);
             setMovies([]);
@@ -82,11 +78,7 @@ export function MoviesProvider({children}) {
                 setNumResults(data.totalResults);
 
                 setTotalPages(Math.ceil(data.totalResults / 10));
-
-                if (data.Search.length > 0 && isNewSearch) {
-                    // Pre-select the first movie in the list
-                    await fetchSelectedMovie(data.Search[0].imdbID);
-                }
+                setCurrentPage((prev) => prev + 1)
             } else {
                 // No results found
                 setMovies([]);
@@ -98,7 +90,6 @@ export function MoviesProvider({children}) {
             console.error(error);
         } finally {
             setListLoading(false);
-            setCurrentPage((prev) => prev + 1)
         }
     };
 
@@ -108,6 +99,15 @@ export function MoviesProvider({children}) {
     useEffect(() => {
         throttledFetchMovies(searchQuery, selectedSearchType, searchYearRange, currentPage);
     }, [searchQuery, selectedSearchType, searchYearRange]);
+
+    // Pre-select the first movie in the list
+    useEffect(() => {
+        if (!listLoading && movies.length > 0) {
+            (async () => {
+                await fetchSelectedMovie(movies[0].imdbID)
+            })();
+        }
+    }, [movies, listLoading]);
 
     // Implement infinite scrolling
     const handleScroll = function () {
@@ -144,6 +144,11 @@ export function MoviesProvider({children}) {
         try {
             const response = await fetch(`${BASE_URL}&i=${imdbID}`);
             const data = await response.json();
+            // No results found
+            if (data.Error) {
+                console.error(data.Error);
+                return;
+            }
             setSelectedMovie(data);
             movieCache[imdbID] = data;
         } catch (error) {

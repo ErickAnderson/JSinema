@@ -29,4 +29,7 @@ npm run preview
 ```
 
 ## Changelog
+- [16/07/2024] **v1.0.2** Patch Notes:
+  - Improved Readability: Enhanced the text visibility on UI elements.
+  - Bug Fix: Resolved an issue where a movie selection occurred before the movie data was fully fetched.
 - [16/07/2024] **v1.0.0** - Initial Release

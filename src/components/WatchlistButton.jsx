@@ -27,11 +27,11 @@ function WatchlistButton() {
         localStorage.setItem('jsinema_watchlist', JSON.stringify(localWatchlist));
     }
 
-    let style = 'hover:bg-yellow-400';
+    let style = 'hover:bg-yellow-400/50';
     let title = 'Add to your watchlist';
 
     if (movieOnWatchlist) {
-        style = 'bg-yellow-400 hover:bg-red-500 hover:border-red-600';
+        style = 'bg-yellow-400/50 hover:bg-red-500 hover:border-red-600';
         title = 'Remove from your watchlist';
     }
 

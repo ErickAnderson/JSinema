@@ -1,7 +1,7 @@
-.radio{
-    @apply mr-2 cursor-pointer checked:bg-yellow-400 appearance-none border-2 border-gray-400 rounded-full h-5 w-5;
+#search-form .radio{
+    @apply mr-2 cursor-pointer focus:outline outline-2 outline-white checked:bg-yellow-400 appearance-none border-2 border-gray-400 rounded-full h-5 w-5;
 }
-.radio:checked{
+#search-form .radio:checked{
     @apply bg-yellow-400 border-yellow-400 shadow-slate-900;
     animation: radio-selected 0.2s ease-out forwards;
 }

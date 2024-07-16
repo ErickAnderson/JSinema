@@ -9,7 +9,6 @@ function Form() {
               onSubmit={(event) => {
                   event.preventDefault();
               }}>
-            >
             <SearchTitle/>
 
             <SearchYearRange/>
