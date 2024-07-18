@@ -1,4 +1,9 @@
+import PropTypes from "prop-types";
 import {FadeLoader} from "react-spinners";
+
+Spinner.propTypes = {
+    loading: PropTypes.bool.isRequired
+};
 
 const override = {
     display: 'block',

@@ -1,3 +1,9 @@
+import PropTypes from "prop-types";
+
+MovieRating.propTypes = {
+    source: PropTypes.string.isRequired,
+    rating: PropTypes.string
+}
 function MovieRating({source, rating}) {
     return (
         <div className="text-center w-full border-r border-gray-500 last:border-0">

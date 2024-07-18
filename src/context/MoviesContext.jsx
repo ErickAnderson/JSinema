@@ -1,4 +1,5 @@
 import {createContext, useCallback, useContext, useEffect, useState} from 'react';
+import PropTypes from "prop-types";
 import {useSearch} from "./SearchContext.jsx";
 import {throttle} from "../utils/functions.js";
 
@@ -15,6 +16,10 @@ const MoviesContext = createContext(null);
 
 export function useMovies() {
     return useContext(MoviesContext);
+}
+
+MoviesProvider.propTypes = {
+    children: PropTypes.node.isRequired
 }
 
 export function MoviesProvider({children}) {

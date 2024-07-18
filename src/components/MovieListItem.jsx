@@ -1,5 +1,10 @@
+import PropTypes from "prop-types";
 import noImage from "../assets/images/no-image.png";
 import {useMovies} from "../context/MoviesContext.jsx";
+
+MovieListItem.propTypes = {
+    movie: PropTypes.object.isRequired
+}
 
 function MovieListItem({movie}) {
     const {selectedMovie, fetchSelectedMovie} = useMovies();

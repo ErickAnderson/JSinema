@@ -1,6 +1,12 @@
+import PropTypes from "prop-types";
 import "../../assets/styles/radio.css";
 
 import {useSearch} from "../../context/SearchContext.jsx";
+
+SearchTypeRadio.propTypes = {
+    radioLabel: PropTypes.string.isRequired,
+    radioValue: PropTypes.string.isRequired
+}
 
 function SearchTypeRadio({radioLabel, radioValue}) {
     const {selectedSearchType, setSelectedSearchType} = useSearch();

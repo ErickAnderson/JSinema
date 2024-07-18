@@ -1,8 +1,13 @@
 import ReactSlider from "react-slider";
 import {useEffect} from "react";
+import PropTypes from "prop-types";
 import {useSearch} from "../../context/SearchContext.jsx";
 
 import "../../assets/styles/slider.css";
+
+SearchYearRange.propTypes = {
+    minYear: PropTypes.number
+}
 
 function SearchYearRange({minYear = 1900}) {
     const maxYear = new Date().getFullYear();
